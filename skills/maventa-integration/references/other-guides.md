@@ -7,7 +7,7 @@ Snapshot from 2026-11-26. The live index is https://documentation.maventa.com/ll
 URL here returns 404 or a page you expect is missing.
 
 - [AutoScan](https://documentation.maventa.com/autoscan.md): Receive PDF invoices as e-invoices with AutoScan: suppliers email PDFs to a scan address and Smartscan extracts the data with VERIFIED checks. Compared with Scan Network.
-- [Changes to consumer invoicing activation in Norway](https://documentation.maventa.com/b2cno-activation-changes.md): Prepare for the 15.11.2026 changes to Norwegian consumer invoicing activation: eFaktura under Maventa's MPS agreement, no Visma Sign, and new REST and SOAP API responses.
+- [Changes to consumer invoicing activation in Norway](https://documentation.maventa.com/b2cno-activation-changes.md): What changed in Norwegian consumer invoicing activation on 15.11.2026: eFaktura under Maventa's MPS agreement, no Visma Sign, and new REST and SOAP API responses.
 - [Maventa Connector](https://documentation.maventa.com/connector.md): Download Maventa Connector, the Windows service that moves invoices between local folders and Maventa, and upgrade to version 2.1: requirements, changes and FAQ.
 - [Kivra moves to OmaPosti](https://documentation.maventa.com/kivra-to-omaposti.md): Update your integration for the move from Kivra to OmaPosti in Finland: renamed digital post parameters, new delivery method values and how to let invoices reach OmaPosti.
 - [Maventa Peppol API](https://documentation.maventa.com/peppol-api.md): Integrate with Maventa as your Peppol Access Point step by step: partner access, KYC, company registration, authentication, sending and receiving invoices, and webhooks.
