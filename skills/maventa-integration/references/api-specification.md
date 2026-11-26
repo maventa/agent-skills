@@ -1,0 +1,227 @@
+# Maventa documentation: API Specification
+
+Index of the API Specification section of the Maventa documentation: one line per page with its summary.
+Fetch a page by its `.md` URL to read it; the summaries are not enough to answer from.
+
+Snapshot from 2026-11-26. The live index is https://documentation.maventa.com/llms.txt: read it if a
+URL here returns 404 or a page you expect is missing.
+
+## API Specification
+
+- [API overview](https://documentation.maventa.com/api-specification/overview.md): Compare Maventa's REST and SOAP APIs for e-invoicing and document exchange, and check service availability, maintenance status and IP address and firewall guidance.
+
+## REST API
+
+- [Getting Started](https://documentation.maventa.com/api-specification/rest-api/getting-started.md): Start with the Maventa REST API: get an OAuth2 bearer token with company or operator credentials and scopes, handle token expiry and errors, and find test and production URLs.
+- [Common & authentication API](https://documentation.maventa.com/api-specification/rest-api/common-and-authentication-api.md): REST endpoints to request OAuth2 tokens, check the authenticated user and company, verify authentication status, list public signing keys and manage ODP companies.
+  - Operations:
+    - `POST /oauth2/token`: OAuth2 token endpoint
+    - `GET /oauth2/current`: Fetch information about the authenticated user and company
+    - `GET /status/authenticated`: Status requiring authentication
+    - `GET /v1/jwk`: List the public keys of this API
+    - `GET /odp/companies/{id}`: Fetch ODP company by id
+    - `PATCH /odp/companies/{id}`: Update existing ODP company or create a new one if missing
+- [Invoices API](https://documentation.maventa.com/api-specification/rest-api/invoices-api.md): REST endpoints to send invoices, list and download received invoices and files, track actions and events, reroute failed deliveries and report fraud attempts.
+  - Operations:
+    - `GET /v1/invoices`: List invoices
+    - `POST /v1/invoices`: Upload new invoice
+    - `GET /v1/invoices/{id}`: Invoice details
+    - `GET /v1/invoices/{id}/actions`: List invoice actions
+    - `PATCH /v1/invoices/{id}/invoice_events`: Change state for recevied events
+    - `GET /v1/invoices/{id}/files/{file_id}`: Fetch file content
+    - `PUT /v1/invoices/{id}/reroute/einvoice`: Reroutes invoice via einvoice
+    - `PUT /v1/invoices/{id}/reroute/email`: Reroutes invoice via email
+    - `PUT /v1/invoices/{id}/reroute/print`: Reroutes invoice via print
+    - `GET /v1/invoices/{id}/reports`: Fetch user reports for invoice
+    - `POST /v1/invoices/{id}/reports`: Report sender of fraud attempt
+    - `DELETE /v1/invoices/{id}/reports/{report_id}`: Delete user report for invoice
+    - `POST /v1/invoices/{id}/responses/nemhandel`: Sets the business response for an invoice in the Nemhandel network.
+    - `GET /v1/invoices/{id}/responses/fr`: List French e-invoicing responses for an invoice
+    - `POST /v1/invoices/{id}/responses/fr/refused`: Refuse an invoice in the French e-invoicing network (Refusée)
+- [Documents API](https://documentation.maventa.com/api-specification/rest-api/documents-api.md): REST endpoints to send, query, update and download business documents beyond invoices, such as orders, and to follow their delivery events and files in Maventa.
+  - Operations:
+    - `GET /v1/documents`: Query documents
+    - `POST /v1/documents`: Create document
+    - `GET /v1/documents/{id}`: Document details
+    - `PATCH /v1/documents/{id}`: Update existing document
+    - `GET /v1/documents/{id}/events`: Document's events
+    - `GET /v1/files`: List document files
+    - `GET /v1/files/{id}`: Get file content
+- [Companies & settings API](https://documentation.maventa.com/api-specification/rest-api/companies-and-settings-api.md): REST endpoints to create and authorize companies, register in networks such as Peppol, change company settings, manage users and departments, and subscribe to notifications.
+  - Operations:
+    - `GET /v1/company/profiles`: List network registrations
+    - `POST /v1/company/profiles`: Create network registration request
+    - `PUT /v1/company/profiles/{id}/extensions`: EXPERIMENTAL Create extensions for profiles
+    - `GET /v1/company/profiles/{id}`: Fetch a network registration
+    - `PATCH /v1/company/profiles/{id}`: Update a network registration
+    - `DELETE /v1/company/profiles/{id}`: Delete a network registration
+    - `GET /v1/company/settings`: Fetch company settings
+    - `PATCH /v1/company/settings`: Modify company settings
+    - `GET /v1/company/consumers`: List B2CNO Consumers - DEPRECATED 2025
+    - `GET /v1/company/notifications`: List notification subscriptions
+    - `POST /v1/company/notifications`: Create new notification subscription
+    - `GET /v1/company/notifications/{id}`: Fetch a specific notification subscription
+    - `DELETE /v1/company/notifications/{id}`: Delete a specific notification subscription
+    - `POST /v1/company/notifications_resend_unacknowledged`: [EXPERIMENTAL] Resend unacknowledged notifications
+    - `GET /v1/company/vendors`: Vendor API key link status
+    - `POST /v1/company/vendors`: Link vendor API key
+    - `DELETE /v1/company/vendors`: Unlink vendor API key
+    - `GET /v1/company/authorization`: Company authorization status.
+    - `POST /v1/company/authorization`: Authorize your company.
+    - `GET /v1/company/users`: List existing users
+    - `POST /v1/company/users`: Add a new or existing user to a company
+    - `GET /v1/company/users/{user_id}`: Fetch user info
+    - `PATCH /v1/company/users/{user_id}`: Update user info
+    - `DELETE /v1/company/users/{user_id}`: Remove a user from this company
+    - `POST /v1/company/users/{user_id}/roles`: Update user role
+    - `POST /v1/company/keep_active`: Mark company as active even if no transactions have occurred during the past year.
+    - `GET /v1/company/departments`: List departments [EXPERIMENTAL]
+    - `POST /v1/company/departments`: Create a department [EXPERIMENTAL]
+    - `GET /v1/companies`: List active companies the user has access to
+    - `POST /v1/companies`: Create a Company
+    - `POST /v1/companies/authorizations`: Authorize one or multiple companies.
+    - `GET /v1/companies/{id}/status`: Company authorization status.
+    - `POST /v1/users`: Create a User
+- [Lookups API](https://documentation.maventa.com/api-specification/rest-api/lookups-api.md): REST endpoints to look up e-invoice recipients before sending: find sending options by business ID, B2B document receivers and consumer recipients.
+  - Operations:
+    - `GET /v1/lookup/endpoints`: Fetch sending options for company bid
+    - `GET /v1/lookup/consumers`: Lookup for consumer recipients
+    - `GET /v1/lookup/receivers`: Lookup for B2B document receivers
+- [Detect API](https://documentation.maventa.com/api-specification/rest-api/detect-api.md): REST endpoints for Maventa Detect fraud prevention: configure checks, read detect results for received invoices, run VAT, business ID and warning list checks and report companies.
+  - Operations:
+    - `GET /v1/invoices/reports/definitions`: Get useful definitions for user reports
+    - `GET /v1/services/detect/checks`: List enabled Detect checks
+    - `PATCH /v1/services/detect/checks`: Update Detect checks
+    - `GET /v1/invoices/{id}/detect_results`: Fetch results provided by Detect service
+    - `GET /v1/definitions/detect/checks`: Get definition of all supported detect checks
+    - `GET /v1/analysis/definitions`: Get definition of all supported analysis checks
+    - `POST /v1/analysis`: Trigger analysis for resource
+    - `GET /v1/analysis/{id}`: Resource analysis result
+    - `GET /status`: Public status checks
+    - `GET /v1/data/sending_parties`: Fetch sending parties
+    - `POST /v1/data/sending_parties`: Create sending parties
+    - `POST /v1/data/supplier/bank_accounts`: Stores supplier bank account information
+    - `GET /v1/check/vat`: Check if an organisation is found from VAT registry
+    - `GET /v1/check/auto_supplier`: Check if a supplier is sending documents electronically
+    - `GET /v1/check/bid_status`: Check if an organisation is registered and active, going through insolvency or bankruptcy proceedings.
+    - `GET /v1/check/warning_list`: Check if an organization has had suspicious activity in the past.
+    - `POST /v1/analysis`: Trigger analysis for given resource
+    - `GET /v1/analysis/{id}`: Get status of results or results when ready
+    - `GET /v1/analysis_definitions`: Get definition of all supported analysis checks
+    - `GET /v1/reports`: Fetch user reports
+    - `POST /v1/reports`: Report company
+    - `DELETE /v1/reports/{id}`: Delete a user report
+    - `GET /v1/reports_definitions`: Get useful definitions for user reports
+- [Validator API](https://documentation.maventa.com/api-specification/rest-api/validator-api.md): REST endpoint to identify an XML business document and validate it against XML schema and schematron rules with the Maventa Validator API.
+  - Operations:
+    - `POST /v1/validate`: Identifies and validates provided document.
+- [Receivables API](https://documentation.maventa.com/api-specification/rest-api/receivables-api.md): REST endpoints for debt collection with Ropo, Amili and Intrum: activate services, transfer invoices to collection, track assignments and events, and exchange messages.
+  - Operations:
+    - `GET /v1/assignments`: Assignment listing
+    - `POST /v1/assignments`: Create new assignment
+    - `GET /v1/assignments/overview`: Assignments overview
+    - `GET /v1/assignments/{assignment_id}`: Fetch an assignment
+    - `POST /v1/assignments/{assignment_id}/reference_ids`: Add a new reference to an assignment
+    - `GET /v1/assignments/{assignment_id}/events`: List events related to an assignment
+    - `POST /v1/assignments/{assignment_id}/events`: Add a new event to an assignment
+    - `POST /v1/assignments/{assignment_id}/events/{event_id}/seen`: Mark event as seen
+    - `GET /v1/assignments/{assignment_id}/messages`: Assignment messages listing
+    - `POST /v1/assignments/{assignment_id}/messages`: Add a new message to an assignment
+    - `GET /v1/events`: Assignment events listing
+    - `GET /v1/message_threads`: MessageThreads listing
+    - `GET /v1/message_threads/{thread_id}`: Get a message thread by id
+    - `PATCH /v1/message_threads/{thread_id}`: Set message thread parameters
+    - `GET /v1/message_threads/{thread_id}/messages`: Messages listing
+    - `POST /v1/message_threads/{thread_id}/messages`: Add a new message to a thread
+    - `PUT /v1/messages/{message_id}/seen`: Mark a message as seen
+    - `GET /v1/service_levels`: List service levels
+    - `GET /v1/service_levels/{customer_bid}`: Get service level for customer
+    - `PATCH /v1/service_levels/{customer_bid}`: Set service level for customer
+    - `GET /v1/reports/settlement`: Settlement Report for the given interval.
+    - `GET /v1/reports/credit_loss_recommendation`: Credit Loss Recommendation Report for the given interval.
+    - `POST /v1/webhooks/ropo`: Ropo webhook endpoint
+    - `GET /v2/services/amili/receivables`: Current state of the Amili collection services
+    - `PUT /v2/services/amili/receivables`: Start the Amili collection services onboarding
+    - `PATCH /v2/services/amili/receivables`: Update the Amili collection services
+    - `DELETE /v2/services/amili/receivables`: Disable the Amili collection services
+    - `GET /v2/services/intrum/receivables`: Current state of the Intrum collection services
+    - `PUT /v2/services/intrum/receivables`: Start the Intrum collection services onboarding
+    - `PATCH /v2/services/intrum/receivables`: Update the Intrum collection services
+    - `DELETE /v2/services/intrum/receivables`: Disable the Intrum collection services
+    - `GET /v2/services/ropo/receivables`: Current state of the Ropo collection services
+    - `PUT /v2/services/ropo/receivables`: Start the Ropo collection services onboarding
+    - `GET /v2/services/receivables`: Current state of the collection services
+    - `GET /v1/services/receivables`: Current state of the collection services
+    - `PUT /v1/services/receivables`: Start the collection services onboarding
+    - `PATCH /v1/services/receivables`: Update the collection services
+    - `DELETE /v1/services/receivables`: Disable the collection services
+    - `GET /v1/invoices/{id}/assignment`: Get assignment for invoice
+    - `POST /v1/invoices/{id}/assignment`: Post assignment for invoice
+    - `GET /v2/invoices/{id}/assignment`: Get assignment for invoice
+    - `POST /v2/invoices/{id}/assignment/ropo`: Post assignment for invoice
+    - `POST /v2/invoices/{id}/assignment/intrum`: Post assignment for invoice
+    - `POST /v2/invoices/{id}/assignment/amili`: Post assignment for invoice
+- [Billing API](https://documentation.maventa.com/api-specification/rest-api/billing-api.md): REST endpoints for partners to fetch transaction counts for billing companies, check the latest complete billing month and register billable actions.
+  - Operations:
+    - `GET /api/billing/v2/reports/billing_company_transactions`: Returns transaction counts that are assigned to the authenticated billing company (partner).
+    - `GET /api/billing/v2/reports/billing_company_transactions/available`: [EXPERIMENTAL] Provides the latest available month for complete billing company transaction data, indicating whether the data for the current calendar month is complete or still being aggregated.
+    - `POST /api/billing/v2/actions`: Creates a new action
+- [Scanning API](https://documentation.maventa.com/api-specification/rest-api/scanning-api.md): REST endpoints to activate and configure Maventa Scan and AutoScan for PDF and paper invoices, and to find and notify suppliers that could send e-invoices instead.
+  - Operations:
+    - `GET /v1/services/autoscan`: Current AutoScan configuration
+    - `PUT /v1/services/autoscan`: Activates AutoScan
+    - `DELETE /v1/services/autoscan`: Deactivates AutoScan
+    - `GET /v1/services/scan`: Current Scan configuration
+    - `POST /v1/services/scan`: Activate scan account
+    - `PUT /v1/services/scan`: Update scan account
+    - `DELETE /v1/services/scan`: Deactivate scan account
+    - `POST /v1/company/suppliers/query`: [EXPERIMENTAL] Query suppliers that could send e-invoices instead PDFs
+    - `POST /v1/company/suppliers/notifications`: [EXPERIMENTAL] Create and send notifications to suppliers
+    - `GET /v1/partner/scan_service/lyanthe`: [EXPERIMENTAL] Fetch Lyanthe scan service information
+    - `POST /v1/partner/scan_service/lyanthe`: [EXPERIMENTAL] Mark Lyanthe scan service as active.
+    - `DELETE /v1/partner/scan_service/lyanthe`: [EXPERIMENTAL] Mark Lyanthe scan service as inactive
+- [B2CFI API](https://documentation.maventa.com/api-specification/rest-api/b2cfi-api.md): REST endpoints for consumer invoicing in Finland: send SI bank messages, check their status, and fetch incoming RI and error messages from Finnish banks.
+  - Operations:
+    - `GET /v1/fi_bank_messages/ri_messages`: List IDs of incoming RI messages within given timeframe
+    - `GET /v1/fi_bank_messages/ri_messages/{id}`: Get content of single RI message
+    - `DELETE /v1/fi_bank_messages/ri_messages/{id}`: Delete a single RI message
+    - `GET /v1/fi_bank_messages/sent_messages`: List IDs of sent messages within given timeframe
+    - `GET /v1/fi_bank_messages/sent_messages/{id}`: Get content of single message
+    - `GET /v1/fi_bank_messages/error_messages`: List IDs of incoming error messages within given timeframe
+    - `GET /v1/fi_bank_messages/error_messages/{id}`: Get content of single error message
+    - `POST /v1/fi_bank_messages`: Upload new message
+    - `GET /v1/fi_bank_messages/{id}`: Get status of sent message
+- [B2CNO API](https://documentation.maventa.com/api-specification/rest-api/b2cno-api.md): REST endpoints for consumer invoicing in Norway: check the eFaktura agreement status, list consumers and manage AvtaleGiro agreements and mandates.
+  - Operations:
+    - `GET /v1/services/b2cno/consumers`: List B2CNO Consumers - DEPRECATED 2025
+    - `GET /v1/services/b2cno`: Information about B2CNO agreement
+    - `GET /v1/services/atg`: List ATG agreements
+    - `POST /v1/services/atg`: Create a new ATG agreement
+    - `GET /v1/services/atg/mandates`: List B2C ATG mandates
+    - `GET /v1/services/atg/{account_number}`: Fetch ATG agreement
+    - `PATCH /v1/services/atg/{account_number}`: Update existing ATG agreement
+- [B2CSE API](https://documentation.maventa.com/api-specification/rest-api/b2cse-api.md): REST endpoints for consumer invoicing in Sweden: request and check the B2C agreement for delivering invoices to online banks and digital mailboxes such as Kivra.
+  - Operations:
+    - `GET /v1/services/b2cse/agreement`: Get status of B2CSE network reqistration request
+    - `POST /v1/services/b2cse/agreement`: Create B2CSE network registration request
+- [Partner API](https://documentation.maventa.com/api-specification/rest-api/partner-api.md): REST endpoints for Maventa partners to monitor inbound deliveries and outbound errors across customer companies, check company availability and run company takeovers.
+  - Operations:
+    - `GET /v1/partner/invoice_delivery_actions/inbound`: List inbound invoice delivery actions
+    - `GET /v1/partner/invoice_delivery_actions/outbound_errors`: List outbound invoice errors
+    - `GET /v1/partner/invoice_events/received`: List inbound invoice delivery actions
+    - `GET /v1/partner/invoice_events/sent_errors`: List outbound invoice errors
+    - `GET /v1/partner/lookups/companies`: List companies availability
+    - `GET /v1/partner/takeovers/companies`: [EXPERIMENTAL] List available company IDs
+    - `POST /v1/partner/takeovers`: [EXPERIMENTAL] Start takeover process
+    - `POST /v1/partner/takeovers/{takeover_id}/complete`: [EXPERIMENTAL] Complete takeover process
+    - `DELETE /v1/partner/takeovers/{takeover_id}`: [EXPERIMENTAL] Revert takeover process
+
+## SOAP API
+
+- [Getting Started](https://documentation.maventa.com/api-specification/soap-api/getting-started.md): Start with the legacy Maventa SOAP API: WSDL addresses for testing and production, API key authentication, UTF-8 encoding, date formats and error return values.
+- [Account Configuration API Methods](https://documentation.maventa.com/api-specification/soap-api/account-configuration-api-methods.md): SOAP methods to register and authorize companies, configure company settings, enable invoice receiving and Peppol, manage logos and open the web UI with a login token.
+- [Invoice Sending API Methods](https://documentation.maventa.com/api-specification/soap-api/invoice-sending-api-methods.md): SOAP methods to look up recipients and operators, send invoices with metadata, list sent invoices and their states, reroute failed deliveries and send invoices to collection.
+- [Invoice Receiving API Methods](https://documentation.maventa.com/api-specification/soap-api/invoice-receiving-api-methods.md): SOAP methods to list received invoices by ID or date range and download them from Maventa.
+- [B2C Norway API Methods](https://documentation.maventa.com/api-specification/soap-api/b2c-norway-api-methods.md): SOAP methods for consumer invoicing in Norway: order and disable the eFaktura issuer agreement, query consumer agreements and configure AvtaleGiro agreements and mandates.
+- [B2C Finland API Methods](https://documentation.maventa.com/api-specification/soap-api/b2c-finland-api-methods.md): SOAP methods for consumer invoicing in Finland: send SI bank messages, check their status and list, read or delete RI and error messages from Finnish banks.
+- [Other API Methods](https://documentation.maventa.com/api-specification/soap-api/other-api-methods.md): SOAP utility methods to test the connection to the Maventa SOAP API and read the current server time.

@@ -1,0 +1,13 @@
+{
+  "name": "maventa",
+  "description": "Build and debug integrations with Maventa's e-invoicing and e-document exchange APIs, using the official Maventa documentation.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Maventa",
+    "url": "https://documentation.maventa.com"
+  },
+  "homepage": "https://documentation.maventa.com",
+  "repository": "https://github.com/maventa/agent-skills",
+  "license": "MIT",
+  "keywords": ["maventa", "e-invoicing", "peppol", "finvoice", "einvoice", "api"]
+}

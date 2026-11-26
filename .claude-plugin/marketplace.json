@@ -1,0 +1,15 @@
+{
+  "name": "maventa",
+  "owner": {
+    "name": "Maventa",
+    "url": "https://documentation.maventa.com"
+  },
+  "description": "Maventa agent skills: build and debug integrations with Maventa's e-invoicing and e-document exchange APIs.",
+  "plugins": [
+    {
+      "name": "maventa",
+      "source": "./",
+      "description": "The maventa-integration skill: Maventa REST and SOAP APIs, invoice sending and receiving, Peppol, formats, webhooks and country rules, sourced live from the official documentation."
+    }
+  ]
+}
