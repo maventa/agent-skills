@@ -14,7 +14,7 @@ description: >-
   about the Maventa testing and production environments.
 license: MIT
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
   generated: "2026-11-26"
   source: "https://documentation.maventa.com"
 ---
@@ -144,10 +144,13 @@ These come from the documentation; check the linked page for the current detail.
 
 **Sending**
 
-- Store the invoice ID (or send your own `uuid`) and track status by it. To
-  prevent double sends, use your own `uuid` (duplicates are rejected) and/or
-  the company setting `stop_duplicate_numbers` (same invoice number rejected
-  for 7 days with `DUPLICATE INVOICE NUMBER`).
+- Store the invoice ID (or send your own `uuid`) and track status by it. The
+  only reliable way to prevent double sends is your own `uuid`: duplicates
+  are rejected, so generate it once per invoice and reuse it on retries. The
+  company setting `stop_duplicate_numbers` (same invoice number rejected for
+  7 days with `DUPLICATE INVOICE NUMBER`) is only a safety net: it is not
+  race-condition proof, so two sends at almost the same time can both get
+  through. Never present the two as equivalent.
 - API parameters override recipient details in the XML. Adding an operator
   code such as `PEPPOL` next to the e-invoice address forces that network and
   disables fallback routes. Use `disabled_routes` to block einvoice, email or
