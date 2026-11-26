@@ -38,6 +38,7 @@ URL here returns 404 or a page you expect is missing.
 
 - [Webhooks](https://documentation.maventa.com/integration-guide/integration-tools/webhooks.md): Get real-time Maventa event notifications with webhooks: register for one company or all vendor companies, handle payloads, secure the endpoint and review the event types.
 - [Reference implementations](https://documentation.maventa.com/integration-guide/integration-tools/reference-implementations.md): Start a Maventa REST API integration from the Java and C# reference implementations, covering authentication, account creation, invoice sending and receiving, and webhooks.
+- [AI agent skill](https://documentation.maventa.com/integration-guide/integration-tools/ai-agent-skill.md): Install the Maventa integration skill in Claude Code, Codex, Cursor, Copilot or claude.ai so your AI coding agent answers from the current Maventa documentation.
 - [Maventa Connector](https://documentation.maventa.com/integration-guide/integration-tools/maventa-connector.md): Download and upgrade Maventa Connector, the Windows service that moves e-documents between Maventa and local folders for ERP systems without a direct API integration.
 - [Embeddable User Interface](https://documentation.maventa.com/integration-guide/integration-tools/embeddable-user-interface.md): Embed the Maventa user interface (EUI) in your ERP with a script or iframe: fetch access tokens, pick views with setup parameters and direct URLs, and handle unverified companies.
 

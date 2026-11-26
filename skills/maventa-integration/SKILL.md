@@ -14,7 +14,7 @@ description: >-
   about the Maventa testing and production environments.
 license: MIT
 metadata:
-  version: "1.0.0"
+  version: "1.0.1"
   generated: "2026-11-26"
   source: "https://documentation.maventa.com"
 ---
